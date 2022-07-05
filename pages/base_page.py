@@ -1,5 +1,7 @@
 import math
 from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
+from selenium.webdriver.support import expected_conditions as  EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class BasePage:
@@ -11,12 +13,20 @@ class BasePage:
     def open(self):
         self.browser.get(self.url)
 
+    def presence_of_elt_located(self, method,locator):
+        element = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((method,locator)))
+        return element
+
     def is_element_present(self,method, locator):
         try:
             self.browser.find_element(method, locator)
         except NoSuchElementException:
             return False
         return True
+
+    def return_element_lacated(self,method,locator):
+        elt = self.browser.find_element(method,locator)
+        return elt
 
     def get_current_url(self):
         cur_url = self.browser.current_url
