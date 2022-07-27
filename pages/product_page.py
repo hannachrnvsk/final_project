@@ -1,5 +1,5 @@
 from .base_page import BasePage
-from .locators import ProductPageLocators
+from .locators import ProductPageLocators, BasketPageLocators
 
 
 class ProductPage(BasePage):
@@ -18,4 +18,20 @@ class ProductPage(BasePage):
     def should_be_button_addtochart(self):
         assert self.is_element_present(*ProductPageLocators.ADD_TO_BASKET_BUTTON),"Button 'Add to basket' is not presented"
 
+    def click_addtochart_button(self):
+        self.click_button(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
 
+    def go_to_basket(self):
+        self.click_button(*ProductPageLocators.VIEW_BASKET_BUTTON)
+
+    def should_be_message_empty_basket(self):
+        assert 'empty' in self.return_element_located(*BasketPageLocators.EMPTY_BASKET_MESSAGE).text
+
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    def  should_not_be_success_message_dis(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE),\
+            "Success message is presented, but should not be"

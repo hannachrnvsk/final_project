@@ -2,9 +2,6 @@ import time
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import fake_useragent
-
-user = fake_useragent.UserAgent().random
 
 
 def pytest_addoption(parser):
@@ -18,14 +15,13 @@ def browser(request):
     print("\nstart browser for test..")
     options = Options()
     options.add_experimental_option('prefs', {'intl.accept_languages': language})
-    options.add_argument("chrome")
+    options.add_argument("chrome") # change to "chrome" to see
     options.add_argument("--start-maximized")
     options.add_argument("--window-size=1980,1080")
-    options.add_argument(f"user-agent = {user}")
     browser = webdriver.Chrome(options=options)
     browser.implicitly_wait(10)
     yield browser
-    print("\nquit browser..")
+    print("\nmust quit browser..")
     browser.quit()
 
 
